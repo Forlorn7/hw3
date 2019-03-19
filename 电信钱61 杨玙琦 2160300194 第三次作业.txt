@@ -1,0 +1,133 @@
+1.
+a1=imread("citywall.bmp");
+a2=imread("citywall1.bmp");
+a3=imread("citywall2.bmp");
+a4=imread("elain.bmp");
+a5=imread("elain1.bmp");
+a6=imread("elain2.bmp");
+a7=imread("elain3.bmp");
+a8=imread("lena.bmp");
+a9=imread("lena1.bmp");
+a10=imread("lena2.bmp");
+a11=imread("lena4.bmp");
+a12=imread("woman.bmp");
+a13=imread("woman1.bmp");
+a14=imread("woman2.bmp");
+subplot(441);imhist(a1);title("citywall.bmp");
+subplot(442);imhist(a2);title("citywall1.bmp");
+subplot(443);imhist(a3);title("citywall2.bmp");
+subplot(445);imhist(a4);title("elain.bmp");
+subplot(446);imhist(a5);title("elain1.bmp");
+subplot(447);imhist(a6);title("elain2.bmp");
+subplot(448);imhist(a7);title("elain3.bmp");
+subplot(449);imhist(a8);title("lena.bmp");
+subplot(4,4,10);imhist(a9);title("lena1.bmp");
+subplot(4,4,11);imhist(a10);title("lena2.bmp");
+subplot(4,4,12);imhist(a11);title("lena4.bmp");
+subplot(4,4,13);imhist(a12);title("woman.bmp");
+subplot(4,4,14);imhist(a13);title("woman1.bmp");
+subplot(4,4,15);imhist(a14);title("woman2.bmp");
+
+2.
+a1=imread("citywall.bmp");
+a2=imread("citywall1.bmp");
+a3=imread("citywall2.bmp");
+a4=imread("elain.bmp");
+a5=imread("elain1.bmp");
+a6=imread("elain2.bmp");
+a7=imread("elain3.bmp");
+a8=imread("lena.bmp");
+a9=imread("lena1.bmp");
+a10=imread("lena2.bmp");
+a11=imread("lena4.bmp");
+a12=imread("woman.bmp");
+a13=imread("woman1.bmp");
+a14=imread("woman2.bmp");
+b1=adapthisteq(a1);
+b2=adapthisteq(a2);
+b3=adapthisteq(a3);
+b4=adapthisteq(a4);
+b5=adapthisteq(a5);
+b6=adapthisteq(a6);
+b7=adapthisteq(a7);
+b8=adapthisteq(a8);
+b9=adapthisteq(a9);
+b10=adapthisteq(a10);
+b11=adapthisteq(a11);
+b12=adapthisteq(a12);
+b13=adapthisteq(a13);
+b14=adapthisteq(a14);
+subplot(561);imshow(a1);title("citywall");    subplot(562);imshow(b1);title("citywall均衡");
+subplot(563);imshow(a2);title("citywall1");   subplot(564);imshow(b2);title("citywall1均衡");
+subplot(565);imshow(a3);title("citywall2");   subplot(566);imshow(b3);title("citywall2均衡");
+subplot(567);imshow(a4);title("elain");       subplot(568);imshow(b4);title("elain均衡");
+subplot(5,6,9);imshow(a5);title("elain1");    subplot(5,6,10);imshow(b5);title("elain1均衡");
+subplot(5,6,11);imshow(a6);title("elain2");   subplot(5,6,12);imshow(b6);title("elain2均衡");
+subplot(5,6,13);imshow(a7);title("elain3");   subplot(5,6,14);imshow(b7);title("elain3均衡");
+subplot(5,6,15);imshow(a8);title("lena");     subplot(5,6,16);imshow(b8);title("lena均衡");
+subplot(5,6,17);imshow(a9);title("lena1");    subplot(5,6,18);imshow(b9);title("lena1均衡");
+subplot(5,6,19);imshow(a10);title("lena2");   subplot(5,6,20);imshow(b10);title("lena2均衡");
+subplot(5,6,21);imshow(a11);title("lena4");   subplot(5,6,22);imshow(b11);title("lena4均衡");
+subplot(5,6,23);imshow(a12);title("woman");   subplot(5,6,24);imshow(b12);title("woman均衡");
+subplot(5,6,25);imshow(a13);title("woman1");  subplot(5,6,26);imshow(b13);title("woman1均衡");
+subplot(5,6,27);imshow(a14);title("woman2");  subplot(5,6,28);imshow(b14);title("woman2均衡");
+
+3.
+a=imread('woman.bmp');
+a=im2double(a);
+b=sqrt(a);
+a=im2uint8(a);
+b=im2uint8(b);
+figure;
+subplot(121);imshow(a);
+subplot(122);imshow(b);
+a1=imhist(a);
+b1=histeq(b,a1);
+figure;
+subplot(321);imshow(a);title('模板图像');
+subplot(322);imhist(a);title('模板直方图');
+subplot(323);imshow(b);title('处理前图像');
+subplot(324);imhist(b);title('处理前直方图');
+subplot(325);imshow(b1);title('处理后图像');
+subplot(326);imhist(b1);title('处理后直方图');
+
+4.
+a=imread('lena.bmp');
+n=7;
+b(1:n,1:n)=1;
+b=double(b);
+x1=double(a);
+x2=x1;
+for i=1:512-n+1
+    for j=1:512-n+1
+        m=x1(i:i+(n-1),j:j+(n-1)).*b(1:n,1:n);
+        k=histeq(uint8(m));
+        x3=double(k);
+        x2(i,j)=x3(4,4);
+    end
+end
+c=uint8(x2);
+figure;
+subplot(121);imshow(a);title('原图像');
+subplot(122);imshow(c); title('均衡后的图像');
+        
+5.
+a=imread('lena.bmp');
+t1=86;
+t2=74;
+[m,n]=size(a);
+b=zeros(m,n);
+for i=1:512
+    for j=1:512
+        if a(i,j)<t1&&a(i,j)>t2
+            b(i,j)=a(i,j);
+        end
+    end
+end
+        
+figure;
+subplot(121);imshow(a);
+subplot(122);imshow(b);
+
+
+
